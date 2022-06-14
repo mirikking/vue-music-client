@@ -1,25 +1,18 @@
 <template>
-  <div id="__simetry">
-      <main-header>dawdawd</main-header>
-      <main>
-        <h1 class="mt-5">For education purposes</h1>
-      </main>
-  </div>
-
+    <router-view></router-view>
 </template>
 
 <script>
-import MainHeader from "@/components/UI/hard/mh.vue"
 
 export default {
   components: {
-    MainHeader
+
   }
 }
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300&display=swap');
 
 * {
   margin: 0;
@@ -29,11 +22,7 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-main {
-  display: flex;
-  justify-content: center;
+  font-family: 'Nunito', sans-serif;
 }
 
 </style>
