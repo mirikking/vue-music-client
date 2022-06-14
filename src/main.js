@@ -8,11 +8,11 @@ import components from '@/components/UI/library.js';
 
 const app = createApp(App)
 
+components.forEach(component => {
+    app.component(component.name, component)
+})
+
 app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
-
-components.forEach(component => {
-    app.component(component.name, component)
-})

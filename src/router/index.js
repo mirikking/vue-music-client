@@ -1,13 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import charts from '../views/charts.vue'
+import main from '../views/main.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'main',
+      component: main
+    },
+    {
+      path: '/charts',
+      name: 'charts',
+      component: charts
     },
   ]
 })

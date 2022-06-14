@@ -1,8 +1,8 @@
 <template>
   <header class="nav container-fluid pt-3">
-    <h1 class="title">CCJ Music</h1>
-    <h2 onclick="location.href='music/charts.html'">Charts</h2>
-    <h2 onclick="location.href='#'" id="test">Albums</h2>
+    <router-link to="/"><h1 class="title">CCJ Music</h1></router-link>
+    <router-link to="/charts"><h2>Charts</h2></router-link>
+    <router-link to="/"><h2>Albums</h2></router-link>
   </header>
 </template>
 
@@ -14,21 +14,22 @@ export default {
 
 <style scoped>
 
-.nav h2:not(.title) {
+.nav a {
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0% 100%;
+    background-position: 50% 70%;
     background-repeat: no-repeat;
     background-size: 0% 2px;
-    transition: background-size .3s;
+    transition: background-size .2s;
 }
 
-.nav h2:hover {
+.nav a:hover:not(:first-child) {
     background-size: 100% 2px;
 }
 
 .nav {
-    font-family: 'Roboto Mono', monospace;
+    margin: 0px;
+    padding: 0px;
     display: flex;
     justify-content: center;
     text-align: center;
@@ -40,13 +41,13 @@ export default {
     box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
 }
 
-.nav h2,
-.nav img {
+.nav a {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    margin-inline-start: 5rem;
+    margin-inline: 2rem;
     cursor: pointer;
+    color: black
 }
 
 .nav h1:hover {
