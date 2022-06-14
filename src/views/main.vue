@@ -1,6 +1,6 @@
 <template>
   <div id="__simetry">
-      <main-header></main-header>
+      <MainHeader></MainHeader>
       <main>
         <h1 class="mt-5">For education purposes</h1>
       </main>
@@ -8,12 +8,7 @@
 </template>
 
 <script>
-import MainHeader from '@/components/UI/hard/mh.vue';
-
 export default {
-  components: {
-    MainHeader
-  }
 }
 </script>
 

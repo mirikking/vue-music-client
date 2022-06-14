@@ -1,18 +1,13 @@
 <template>
   <div id="__simetry">
-      <main-header></main-header>
-      <main>
-      </main>
+      <MainHeader></MainHeader>
+      <main></main>
   </div>
 </template>
 
 <script>
-import MainHeader from '@/components/UI/hard/mh.vue';
-
 export default {
-  components: {
-    MainHeader
-  }
+
 }
 </script>
 
