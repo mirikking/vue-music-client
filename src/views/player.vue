@@ -1,9 +1,7 @@
 <template>
   <layout id="__simetry">
     <MainHeader></MainHeader>
-      <main>
-        <TracksSection></TracksSection>
-      </main>
+    <PlayerSection :currentTrack="currentTrack"></PlayerSection>
   </layout>
 </template>
 
