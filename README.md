@@ -1,13 +1,8 @@
 # Status: on working...
 
-```sh
-https://dropmefiles.com/gTcn3 original pack
-```
-
-
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[VSCode](https://code.visualstudio.com/) + Vetur
 
 ## Project Setup
 
@@ -18,11 +13,5 @@ npm install
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
+npm run dev on client and same on server
 ```
