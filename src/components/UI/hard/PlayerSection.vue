@@ -13,7 +13,7 @@
                     <img src="../../../public/assets/svg/next.svg" alt="Next" class="track_next_button d-flex">
                 </div>
                 <div class="track_progress_bar mt-4 me-0">
-                    <audio :src="this.currentTrack.path" class="track_audio"></audio>
+                    <audio :src="`http://localhost:3001/api/${this.currentTrack.name}`" class="track_audio"></audio>
                     <p class="me-3 current_time_track">0:00</p>
                     <div class="progress_bar"><div class="progress_slider"></div></div>
                     <p class="ms-3 duration_track">{{ this.currentTrack.trackDuration }}</p>
