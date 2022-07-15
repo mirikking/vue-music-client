@@ -1,8 +1,10 @@
 <template>
-  <layout id="__simetry">
+  <div id="__simetry">
     <MainHeader></MainHeader>
-    <PlayerSection :currentTrack="currentTrack"></PlayerSection>
-  </layout>
+    <main>
+          <PlayerSection></PlayerSection>
+    </main>
+  </div>
 </template>
 
 <script>

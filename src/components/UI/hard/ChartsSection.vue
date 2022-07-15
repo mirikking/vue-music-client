@@ -12,7 +12,7 @@ const api = 'http://localhost:3001/api/graphql'
 const apiLoop = axios.get(api)
 
 export default { 
-  name: "TracksSection",
+  name: "ChartsSection",
   data() {
     return {
         tracksArray: [],

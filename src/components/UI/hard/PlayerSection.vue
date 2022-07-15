@@ -1,11 +1,11 @@
 <template>
   <section class="container-fluid pt-5 player">
         <div class="container track_group">
-            <img src="" alt="Cover" class="track_img d-flex">
+            <img :src="this.currentTrack.encodedPicture" alt="Cover" class="track_img d-flex">
             <div class="track_discription mt-3">
                 <div class="track_info ms-5">
-                    <strong class="track_title"></strong>
-                    <p class="track_artist"></p>
+                    <strong class="track_title">{{ this.currentTrack.trackTitle }}</strong>
+                    <p class="track_artist">{{ this.currentTrack.trackArtist }}</p>
                 </div>
                 <div class="track_control_buttons p-0 mt-5">
                     <img src="../../../public/assets/svg/back.svg" alt="Back" class="track_back_button d-flex">
@@ -13,10 +13,10 @@
                     <img src="../../../public/assets/svg/next.svg" alt="Next" class="track_next_button d-flex">
                 </div>
                 <div class="track_progress_bar mt-4 me-0">
-                    <audio src="" class="track_audio"></audio>
+                    <audio :src="this.currentTrack.path" class="track_audio"></audio>
                     <p class="me-3 current_time_track">0:00</p>
                     <div class="progress_bar"><div class="progress_slider"></div></div>
-                    <p class="ms-3 duration_track">0</p>
+                    <p class="ms-3 duration_track">{{ this.currentTrack.trackDuration }}</p>
                 </div>
                 <div class="track_volume">
                     <img src="../../../public/assets/svg/volume.svg" alt="Volume" class="track_volume_img">
@@ -28,11 +28,17 @@
 </template> 
 
 <script>
-import { eventBus } from '@/main.js'
+import { trackStore } from '@/stores/stateTrack'
 
 export default {
     name: 'PlayerSection',
+    data() {
+        return {
+            currentTrack: trackStore().currentTrack
+        }
+    },
     mounted() {
+
     }
 }
 </script>

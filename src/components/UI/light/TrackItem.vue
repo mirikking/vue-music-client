@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { eventBus } from '@/main.js'
+import { trackStore } from '@/stores/stateTrack'
 
 export default {
     name: "TrackItem",
@@ -23,23 +23,14 @@ export default {
           required: true
         }
     },
-    data() {
-      return {
-        currentTrack: { 
-          type: Object,
-          required: true
-        }
-      }
-    },
     methods: {
        pushTrack(event) {
         let proxiedTracksArray = this.tracksArray
         let currentTrackId = event.currentTarget.getAttribute('data-musicid')
         proxiedTracksArray.forEach(e => {
           if (e.id == currentTrackId) {
-            this.currentTrack = e; 
-            eventBus.$emit(currentTrack)
-            // this.$router.push({path: '/player',})
+            trackStore().currentTrack = e
+            this.$router.push({path: '/player',})
           }
         })
       } 

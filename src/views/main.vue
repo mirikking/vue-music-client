@@ -1,10 +1,10 @@
 <template>
-  <layout id="__simetry">
+  <div id="__simetry">
       <MainHeader></MainHeader>
       <main>
         <h1 class="mt-5">For education purposes</h1>
       </main>
-  </layout>
+  </div>
 </template>
 
 <script>

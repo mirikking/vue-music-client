@@ -1,10 +1,10 @@
 <template>
-  <layout id="__simetry">
+  <div id="__simetry">
     <MainHeader></MainHeader>
       <main>
-        <TracksSection></TracksSection>
+        <ChartsSection></ChartsSection>
       </main>
-  </layout>
+  </div>
 </template>
 
 <script>
