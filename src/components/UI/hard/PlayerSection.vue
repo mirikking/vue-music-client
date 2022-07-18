@@ -29,6 +29,7 @@
 
 <script>
 import { trackStore } from '@/stores/stateTrack'
+import anime from 'animejs';
 
 export default {
     name: 'PlayerSection',
@@ -38,12 +39,180 @@ export default {
         }
     },
     mounted() {
+        let controlButton = document.querySelector('.track_control_button');
+        let nextButton = document.querySelector('.track_next_button');
+        let prevButton = document.querySelector('.track_back_button');
 
+        let progressSlider = document.querySelector('.progress_slider')
+        let progress = document.querySelector('.progress_bar')
+        let currentDuration = null; 
+        let audio = document.querySelector('.track_audio');
+        let volumeSlider = document.querySelector('.volume_slider');
+        let progressVolume = document.querySelector('.track_volume_control');
+        let volumeButton = document.querySelector('.track_volume_img');
+        let isOncePlayed = false;
+        audio.volume = 0.1
+
+        // Animation
+        const fliper = anime({
+        targets: '.track_img',
+        rotate: [0, 360],
+        delay: 0,
+        duration: 12000,
+        loop: true,
+        easing: 'linear',
+        autoplay: false,
+        });
+
+        const backFliper = anime({
+        targets: '.track_img',
+        rotate: 0,
+        duration: 1000,
+        loop: false,
+        easing: 'linear',
+        autoplay: false,
+        })
+
+        const arrowForward = anime({
+        targets: nextButton,
+        translateX: 100,
+        delay: 0,
+        duration: 150,
+        loop: 1,
+        easing: 'linear',
+        autoplay: false,
+        direction: 'alternate',
+        })
+
+        const arrowBackward = anime({
+        targets: prevButton,
+        translateX: -100,
+        delay: 0,
+        duration: 150,
+        loop: 1,
+        easing: 'linear',
+        autoplay: false,
+        direction: 'alternate',
+        })
+    
+        nextButton.addEventListener('click', () => {
+            arrowForward.play()
+        })
+        prevButton.addEventListener('click', () => {
+            arrowBackward.play()
+        })
+        controlButton.addEventListener('click', () => {
+            audioControl()
+        })
+        volumeButton.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+            } else {
+                audio.muted = true;
+            }
+        })
+
+        const audioControl = () => {
+            let statusOfPlayer = controlButton.getAttribute('data-status') 
+            if (statusOfPlayer === 'onPause') {
+                if (isOncePlayed == false) {
+                    controlButton.addEventListener('click', () => {
+                        fliper.restart();
+                    })
+                    isOncePlayed = true;
+                }
+                controlButton.addEventListener('click', () => {
+                    fliper.start();
+                })
+                audio.play();
+                controlButton.setAttribute('src', '@/public/assets/svg/pausebutton.svg');
+                controlButton.setAttribute('data-status', 'onPlay');
+                controlButton.setAttribute('alt', 'Pause'); 
+            } else if (statusOfPlayer === 'onPlay') {
+                audio.pause();
+                controlButton.addEventListener('click', () => {
+                    fliper.pause();
+                })
+                controlButton.setAttribute('src', '@/public/assets/svg/playbutton.svg');
+                controlButton.setAttribute('data-status', 'onPause'); 
+                controlButton.setAttribute('alt', 'Play'); 
+            }
+        }
+
+        const refreshPlayer = () => {
+        let currentTime = audio.currentTime;
+        let progressStat = (currentTime / currentDuration) * 99.99;
+            if (progressStat >= 98.99) {
+                fliper.pause()
+                document.querySelector('.track_img').style.transition='all 2.5s';
+                backFliper.play();
+            }
+            if (progressStat >= 99.97) {
+                audio.pause()
+                controlButton.setAttribute('src', '@/public/assets/svg/playbutton.svg');
+                controlButton.setAttribute('data-status', 'onPause');
+                document.querySelector('.track_img').style.transition='all 0s';
+                backFliper.pause()
+                isOncePlayed = false;
+            }
+        }
+        
+        const activeState = () => {
+            const updateProgress = () => {
+                let currentTime = audio.currentTime;
+                let progressStat = (currentTime / currentDuration) * 100;
+                progressSlider.style.width = `${progressStat}%`;
+                document.querySelector('.current_time_track').innerHTML = pretifyNumber(currentTime);
+            }
+            const setProgress = (e) => {
+                let width = progress.offsetWidth;
+                let clickX = e.offsetX;
+
+                audio.currentTime = (clickX / width) * currentDuration;
+            }
+            const updateVolume = () => {
+                let progressStat = (audio.volume * 100);
+                volumeSlider.style.width = `${progressStat}%`;
+            }
+            const setVolume = (e) => {
+                let width = $(progressVolume).width();
+                let clickX = e.offsetX;
+
+                audio.volume = (clickX / width) * 1;
+            }
+            
+            audio.addEventListener('timeupdate', updateProgress)
+            progress.addEventListener('timeupdate', setProgress)
+            progress.addEventListener('click', setProgress)
+
+            audio.addEventListener('volumechange', updateVolume)
+            progressVolume.addEventListener('click', setVolume)
+
+            audio.addEventListener('timeupdate', refreshPlayer)
+            document.querySelector('.duration_track').innerHTML = pretifyNumber(currentDuration)
+        
+        }
+
+        const pretifyNumber = (num) => {
+            let trackMinutes = (num / 60).toString().split('.')[0];
+            let trackLessSeconds = (num % 60).toString().split('.')[0];
+            if (trackLessSeconds < 10) {
+                return `${trackMinutes}:0${trackLessSeconds}`
+            }
+            return `${trackMinutes}:${trackLessSeconds}`
+        }
+
+        activeState()
     }
 }
 </script>
 
 <style scoped>
+
+p {
+    margin: 0px;
+    padding: 0px;
+}
 
 .track_group {
     display: flex;
