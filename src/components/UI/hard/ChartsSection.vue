@@ -7,7 +7,7 @@
 
 <script>
 import axios from "axios";
-const api = 'http://localhost:3001/api/graphql'
+const api = 'https://mirik-music.herokuapp.com/api/graphql'
 
 const apiLoop = axios.get(api)
 
