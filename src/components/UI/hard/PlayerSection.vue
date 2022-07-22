@@ -8,18 +8,43 @@
                     <p class="track_artist">{{ this.currentTrack.trackArtist }}</p>
                 </div>
                 <div class="track_control_buttons p-0 mt-5">
-                    <img src="../../../public/assets/svg/back.svg" alt="Back" class="track_back_button d-flex">
-                    <img src="../../../public/assets/svg/playbutton.svg" alt="Play" class="track_control_button" data-status="onPause">
-                    <img src="../../../public/assets/svg/next.svg" alt="Next" class="track_next_button d-flex">
+                    <button class="track_back_button d-flex"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 477.175 477.175" style="enable-background:new 0 0 477.175 477.175;" xml:space="preserve"><g><path d="M145.188,238.575l215.5-215.5c5.3-5.3,5.3-13.8,0-19.1s-13.8-5.3-19.1,0l-225.1,225.1c-5.3,5.3-5.3,13.8,0,19.1l225.1,225 c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4c5.3-5.3,5.3-13.8,0-19.1L145.188,238.575z"/></g></svg></button>
+                    <button class="track_control_button">
+                        <svg v-if="statusOfPlayer == 'onPause'" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 92.2 122.88" style="enable-background:new 0 0 92.2 122.88" xml:space="preserve"><g><polygon class="st0" points="92.2,60.97 0,122.88 0,0 92.2,60.97"/></g></svg>
+                        <svg v-if="statusOfPlayer == 'onPlay'" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 87.72 122.88" style="enable-background:new 0 0 87.72 122.88" xml:space="preserve"><g><path class="st0" d="M0,0h35.54v122.88l-35.54,0V0L0,0z M52.18,0h35.54v122.88l-35.54,0V0L52.18,0z"/></g></svg>
+                        </button>
+                    <button class="track_next_button d-flex"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 477.175 477.175" style="enable-background:new 0 0 477.175 477.175;" xml:space="preserve"><g><path d="M360.731,229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1,0s-5.3,13.8,0,19.1l215.5,215.5l-215.5,215.5 c-5.3,5.3-5.3,13.8,0,19.1c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-4l225.1-225.1C365.931,242.875,365.931,234.275,360.731,229.075z"/></g></svg></button>
                 </div>
                 <div class="track_progress_bar mt-4 me-0">
                     <audio :src="`http://localhost:3001/api/${this.currentTrack.name}`" class="track_audio"></audio>
                     <p class="me-3 current_time_track">0:00</p>
                     <div class="progress_bar"><div class="progress_slider"></div></div>
-                    <p class="ms-3 duration_track">{{ this.currentTrack.trackDuration }}</p>
+                    <p class="ms-3 duration_track">0:00</p>
                 </div>
                 <div class="track_volume">
-                    <img src="../../../public/assets/svg/volume.svg" alt="Volume" class="track_volume_img">
+                    <svg
+                        class="track_volume_img"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                            d="M24 12C24 16.4183 20.4183 20 16 20V18C19.3137 18 22 15.3137 22 12C22 8.68629 19.3137 6 16 6V4C20.4183 4 24 7.58172 24 12Z"
+                            fill="currentColor"
+                        />
+                        <path
+                            d="M20 12C20 14.2091 18.2091 16 16 16V14C17.1046 14 18 13.1046 18 12C18 10.8954 17.1046 10 16 10V8C18.2091 8 20 9.79086 20 12Z"
+                            fill="currentColor"
+                        />
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M9 16L15 20V4L9 8H5C2.79086 8 1 9.79086 1 12C1 14.2091 2.79086 16 5 16H9ZM5 10H9L13 7.5V16.5L9 14H5C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10Z"
+                            fill="currentColor"
+                        />
+                    </svg>
                     <div class="track_volume_control"><div class="volume_slider"></div></div>
                 </div>
             </div>
@@ -35,6 +60,7 @@ export default {
     name: 'PlayerSection',
     data() {
         return {
+            statusOfPlayer: 'onPause',
             currentTrack: trackStore().currentTrack
         }
     },
@@ -45,7 +71,7 @@ export default {
 
         let progressSlider = document.querySelector('.progress_slider')
         let progress = document.querySelector('.progress_bar')
-        let currentDuration = null; 
+        let currentDuration = this.currentTrack.trackDuration; 
         let audio = document.querySelector('.track_audio');
         let volumeSlider = document.querySelector('.volume_slider');
         let progressVolume = document.querySelector('.track_volume_control');
@@ -75,7 +101,7 @@ export default {
 
         const arrowForward = anime({
         targets: nextButton,
-        translateX: 100,
+        translateX: 10,
         delay: 0,
         duration: 150,
         loop: 1,
@@ -86,7 +112,7 @@ export default {
 
         const arrowBackward = anime({
         targets: prevButton,
-        translateX: -100,
+        translateX: -10,
         delay: 0,
         duration: 150,
         loop: 1,
@@ -113,30 +139,32 @@ export default {
         })
 
         const audioControl = () => {
-            let statusOfPlayer = controlButton.getAttribute('data-status') 
-            if (statusOfPlayer === 'onPause') {
+            if (this.statusOfPlayer === 'onPause') {
                 if (isOncePlayed == false) {
-                    controlButton.addEventListener('click', () => {
                         fliper.restart();
-                    })
-                    isOncePlayed = true;
+                    isOncePlayed = true; 
+                } else {
+                    fliper.play(); 
                 }
-                controlButton.addEventListener('click', () => {
-                    fliper.start();
-                })
                 audio.play();
-                controlButton.setAttribute('src', '@/public/assets/svg/pausebutton.svg');
+                this.statusOfPlayer = 'onPlay'
                 controlButton.setAttribute('data-status', 'onPlay');
                 controlButton.setAttribute('alt', 'Pause'); 
-            } else if (statusOfPlayer === 'onPlay') {
+            } else if (this.statusOfPlayer === 'onPlay') {
                 audio.pause();
-                controlButton.addEventListener('click', () => {
-                    fliper.pause();
-                })
-                controlButton.setAttribute('src', '@/public/assets/svg/playbutton.svg');
+                fliper.pause();
+                this.statusOfPlayer = 'onPause'
                 controlButton.setAttribute('data-status', 'onPause'); 
                 controlButton.setAttribute('alt', 'Play'); 
             }
+        }
+                const pretifyNumber = (num) => {
+            let trackMinutes = (num / 60).toString().split('.')[0];
+            let trackLessSeconds = (num % 60).toString().split('.')[0];
+            if (trackLessSeconds < 10) {
+                return `${trackMinutes}:0${trackLessSeconds}`
+            }
+            return `${trackMinutes}:${trackLessSeconds}`
         }
 
         const refreshPlayer = () => {
@@ -149,7 +177,8 @@ export default {
             }
             if (progressStat >= 99.97) {
                 audio.pause()
-                controlButton.setAttribute('src', '@/public/assets/svg/playbutton.svg');
+                this.statusOfPlayer = 'onPause'
+                controlButton.setAttribute('src', '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 87.72 122.88" style="enable-background:new 0 0 87.72 122.88" xml:space="preserve"><g><path class="st0" d="M0,0h35.54v122.88l-35.54,0V0L0,0z M52.18,0h35.54v122.88l-35.54,0V0L52.18,0z"/></g></svg>');
                 controlButton.setAttribute('data-status', 'onPause');
                 document.querySelector('.track_img').style.transition='all 0s';
                 backFliper.pause()
@@ -175,7 +204,7 @@ export default {
                 volumeSlider.style.width = `${progressStat}%`;
             }
             const setVolume = (e) => {
-                let width = $(progressVolume).width();
+                let width = progressVolume.offsetWidth
                 let clickX = e.offsetX;
 
                 audio.volume = (clickX / width) * 1;
@@ -193,17 +222,9 @@ export default {
         
         }
 
-        const pretifyNumber = (num) => {
-            let trackMinutes = (num / 60).toString().split('.')[0];
-            let trackLessSeconds = (num % 60).toString().split('.')[0];
-            if (trackLessSeconds < 10) {
-                return `${trackMinutes}:0${trackLessSeconds}`
-            }
-            return `${trackMinutes}:${trackLessSeconds}`
-        }
-
         activeState()
     }
+    
 }
 </script>
 
@@ -245,26 +266,30 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.track_control_buttons:hover > img {
-    cursor: pointer;
-    transition: all 1s;
+    height: 3rem;
 }
 
 .track_control_button {
     height: 2rem;
-    width: 2rem;
+    width: 1.4rem;
+    border: none;
+    background: none
 }
 
 .track_next_button {
-    height: 1.4rem;
+    height: 1.5rem;
     margin-left: 10%;
+    width: 1.5rem;
+    border: none;
+    background: none;
 }
 
 .track_back_button {
-    height: 1.4rem;
+    height: 1.5rem;
     margin-right: 10%;
+    width: 1.5rem;
+    border: none;  
+    background: none;
 }
 
 .track_progress_bar {
@@ -292,9 +317,16 @@ p {
     height: 1.4rem;
     width: 1.6rem;
     cursor: pointer;
+    transition: all 0.1s;
+    border: none;
 }
 
-.track_volume_control {
+.track_volume_img:hover {
+    height: 1.6rem;
+    width: 1.8rem;
+}
+
+.track_volume_control { 
     display: flex;
     position: relative;
     height: 5px;
